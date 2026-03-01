@@ -1,6 +1,6 @@
 import Campaign from "../models/Campaign.js";
-import { analyticsAgent } from "../agents/analyticsAgent.js";
-import { optimizationAgent } from "../agents/optimizationAgent.js";
+import  analyticsAgent from "../agents/analyticsAgent.js";
+import  optimizationAgent  from "../agents/optimizationAgent.js";
 
 export const getDashboardAnalytics = async (req, res) => {
   try {

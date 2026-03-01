@@ -1,8 +1,8 @@
 import groq from "../config/groq.js";
 
-export const researchAgent = async (productDescription) => {
+ const researchAgent = async (productDescription) => {
   const response = await groq.chat.completions.create({
-    model: "llama3-70b-8192",
+    model: "llama-3.3-70b-versatile",
     messages: [
       {
         role: "system",
@@ -21,3 +21,5 @@ export const researchAgent = async (productDescription) => {
 
   return JSON.parse(output);
 };
+
+export default researchAgent;

@@ -1,4 +1,4 @@
-export const analyticsAgent= (data) => {
+ const analyticsAgent= (data) => {
   const {
     impressions = 0,
     clicks = 0,
@@ -26,3 +26,5 @@ export const analyticsAgent= (data) => {
     roi: roi.toFixed(2),
   };
 };
+
+export default analyticsAgent;

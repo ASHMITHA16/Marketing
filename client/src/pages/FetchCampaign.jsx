@@ -19,11 +19,11 @@ const FetchCampaign = () => {
     }
   };
 
-  const handleSelect = (campaign) => {
-    navigate("/dashboard", {
-      state: { selectedCampaign: campaign },
-    });
-  };
+ const handleSelect = (campaign) => {
+  navigate("/dashboard", {
+    state: { campaignId: campaign._id }
+  });
+};
 
   return (
     <div style={styles.page}>

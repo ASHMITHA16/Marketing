@@ -1,4 +1,4 @@
-export const optimizationAgent = (metrics) => {
+const optimizationAgent = (metrics) => {
   const suggestions = [];
 
   if (metrics.ctr < 2) {
@@ -19,3 +19,5 @@ export const optimizationAgent = (metrics) => {
 
   return suggestions;
 };
+
+export default optimizationAgent;

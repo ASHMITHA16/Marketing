@@ -1,18 +1,33 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import API from "../services/api";
+import { useEffect } from "react";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const campaignId = location.state?.campaignId;
 
-  const [selectedCampaign, setSelectedCampaign] = useState(
-    location.state?.selectedCampaign || null
-  );
+  const [selectedCampaign, setSelectedCampaign] = useState(null);
 
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+  if (campaignId) {
+    fetchCampaignById();
+  }
+}, [campaignId]);
+
+const fetchCampaignById = async () => {
+  try {
+    const res = await API.get(`/campaigns/${campaignId}`);
+    setSelectedCampaign(res.data);
+  } catch (err) {
+    console.log(err);
+  }
+};
+  
   const runAgent = async (type) => {
     if (!selectedCampaign) {
       alert("Select a campaign first");
@@ -22,14 +37,17 @@ const Dashboard = () => {
     setLoading(true);
 
     try {
+      console.log("Running agent:", type, "for campaign ID:", campaignId);
       const res = await API.post(
-        `/agent/${selectedCampaign._id}/${type}`
+        `/agents/${campaignId}/${type}`
       );
-
+     console.log(res.data);
       setResult(res.data.result);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (error) {
+  console.error("🔥 AGENT CRASH:", error);
+  console.error("Response data:", error.response?.data);
+  res.status(500).json({ error: error.message });
+}
 
     setLoading(false);
   };
@@ -48,6 +66,7 @@ const Dashboard = () => {
         <button
           style={styles.newBtn}
           onClick={() => navigate("/fetch")}
+          
         >
           Select Campaign
         </button>
@@ -67,6 +86,7 @@ const Dashboard = () => {
         />
         <AgentCard
           title="Strategy Agent"
+
           onClick={() => runAgent("strategy")}
         />
         <AgentCard

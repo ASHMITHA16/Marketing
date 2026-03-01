@@ -1,16 +1,15 @@
 import Campaign from "../models/Campaign.js";
-import {researchAgent} from "../agents/researchAgent.js";
-import {strategyAgent} from "../agents/strategyAgent.js";
+import researchAgent from "../agents/researchAgent.js";
+import strategyAgent from "../agents/strategyAgent.js";
 import contentAgent from "../agents/contentAgent.js";
-import {analyticsAgent} from "../agents/analyticsAgent.js";
-import {optimizationAgent}from "../agents/optimizationAgent.js";
+import analyticsAgent from "../agents/analyticsAgent.js";
+import optimizationAgent from "../agents/optimizationAgent.js";
 
 const runAgent = async (req, res) => {
   try {
     const { id, type } = req.params;
 
     const campaign = await Campaign.findById(id);
-
     if (!campaign) {
       return res.status(404).json({ message: "Campaign not found" });
     }
@@ -25,17 +24,29 @@ const runAgent = async (req, res) => {
         break;
 
       case "strategy":
-        result = await strategyAgent(
-          campaign.research,
-          campaign.budget
-        );
-        campaign.strategy = result;
-        break;
+        if (!campaign.research) {
+         return res.status(400).json({
+          message: "Please run Research Agent first"
+        });
+      }
 
-      case "content":
-        result = await contentAgent(campaign.strategy);
-        campaign.content = result;
-        break;
+     result = await strategyAgent(
+       campaign.research,
+       campaign.budget
+    );
+     campaign.strategy = result;
+     break;
+
+  case "content":
+  if (!campaign.strategy) {
+    return res.status(400).json({
+      message: "Please run Strategy Agent first"
+    });
+  }
+
+ result = await contentAgent(campaign.strategy);
+  campaign.content = result;
+  break;
 
       case "analytics":
         result = analyticsAgent({
@@ -49,12 +60,15 @@ const runAgent = async (req, res) => {
         break;
 
       case "optimization":
-        result = optimizationAgent(campaign.analytics);
-        campaign.optimization = result;
-        break;
+  if (!campaign.analytics) {
+    return res.status(400).json({
+      message: "Please run Analytics Agent first"
+    });
+  }
 
-      default:
-        return res.status(400).json({ message: "Invalid agent type" });
+  result = optimizationAgent(campaign.analytics);
+  campaign.optimization = result;
+  break;
     }
 
     await campaign.save();
