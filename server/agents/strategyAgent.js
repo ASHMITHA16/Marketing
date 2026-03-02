@@ -6,8 +6,18 @@ import groq from "../config/groq.js";
     messages: [
       {
         role: "system",
-        content:
-          "You are a digital marketing strategist. Create a strategy blueprint in JSON format including goal, budgetAllocation (array), and kpis.",
+        content: `
+             You are a digital marketing strategist.
+
+            Based on the research data and budget, create a detailed marketing strategy report including:
+
+              1. Main campaign goal
+              2. Budget allocation with reasoning
+              3. Key performance indicators
+              4. Execution timeline
+
+            Write everything in structured markdown format.
+`
       },
       {
         role: "user",
@@ -19,7 +29,7 @@ import groq from "../config/groq.js";
     temperature: 0.6,
   });
 
-  return JSON.parse(response.choices[0].message.content);
+  return (response.choices[0].message.content);
 };
 
 export default strategyAgent;

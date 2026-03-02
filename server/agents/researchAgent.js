@@ -1,13 +1,23 @@
-import groq from "../config/groq.js";
-
- const researchAgent = async (productDescription) => {
+import groq from"../config/groq.js";
+const researchAgent = async (productDescription) => {
   const response = await groq.chat.completions.create({
     model: "llama-3.3-70b-versatile",
     messages: [
       {
         role: "system",
-        content:
-          "You are a marketing research expert. Analyze the product and return structured JSON with targetAudience, type (B2B/B2C), and suggestedPlatforms array.",
+        content: `
+You are a professional marketing research expert.
+
+Analyze the product in detail and provide:
+
+1. Target audience
+2. Whether it is B2B or B2C (explain why)
+3. Best marketing platforms (with reasons)
+4. Marketing strategy suggestions
+
+Write everything in clear, professional English.
+Do not return JSON.
+`,
       },
       {
         role: "user",
@@ -17,9 +27,7 @@ import groq from "../config/groq.js";
     temperature: 0.7,
   });
 
-  const output = response.choices[0].message.content;
-
-  return JSON.parse(output);
+  return response.choices[0].message.content;
 };
 
 export default researchAgent;

@@ -5,6 +5,11 @@ import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import CreateCampaign from "./pages/CreateCampaign";
 import FetchCampaign from "./pages/FetchCampaign";
+import ResearchResult from "./pages/ResearchResult";
+import StrategyResult from "./pages/StrategyResult";
+import ContentResult from "./pages/ContentResult";
+
+
 function App() {
   return (
     <Router>
@@ -17,6 +22,9 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/campaigns" element={<CreateCampaign />} />
         <Route path="/fetch" element={<FetchCampaign />} />
+        <Route path="/research-result" element={<ResearchResult />} />
+       <Route path="/strategy-result" element={<StrategyResult />} />
+       <Route path="/content-result" element={<ContentResult />} />
       </Routes>
     </Router>
   );

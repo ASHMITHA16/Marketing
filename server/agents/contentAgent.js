@@ -1,80 +1,86 @@
 import groq from "../config/groq.js";
+import axios from "axios";
 
-const contentAgent = async (strategy, contentType = "instagram_post") => {
+const generateImageFromHF = async (prompt) => {
+  try {
+    const response = await axios.post(
+      "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2",
+      {
+        inputs: prompt,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.HF_API_KEY}`,
+        },
+        responseType: "arraybuffer",
+      }
+    );
+
+    const base64Image = Buffer.from(response.data, "binary").toString("base64");
+
+    return `data:image/png;base64,${base64Image}`;
+
+  } catch (error) {
+    console.error("HF Image Error:", error.response?.data || error.message);
+    throw new Error("Image generation failed");
+  }
+};
+
+const contentAgent = async (strategy) => {
   try {
     if (!strategy) {
-      throw new Error("Strategy data is required before generating content");
-    }
-
-    let instruction;
-
-    switch (contentType) {
-      case "instagram_post":
-        instruction =
-          "Generate a full engaging Instagram post with strong hook, body, CTA and hashtags.";
-        break;
-
-      case "instagram_caption":
-        instruction =
-          "Generate a short Instagram caption with emojis and relevant hashtags.";
-        break;
-
-      case "linkedin_post":
-        instruction =
-          "Generate a professional LinkedIn post suitable for business audience.";
-        break;
-
-      case "email_marketing":
-        instruction =
-          "Generate a persuasive marketing email including subject line and CTA.";
-        break;
-
-      default:
-        instruction =
-          "Generate high-quality marketing content based on the strategy.";
+      throw new Error("Strategy data is required");
     }
 
     const prompt = `
 You are an expert marketing content strategist.
 
-Here is the campaign strategy:
+Based on this strategy:
 ${JSON.stringify(strategy)}
 
-Task:
-${instruction}
+Generate an engaging Instagram post.
 
-Return ONLY valid JSON in this format:
+Return ONLY valid JSON:
 
 {
   "title": "...",
   "content": "...",
-  "hashtags": ["#example1", "#example2"]
+  "hashtags": ["#tag1", "#tag2"],
+  "imagePrompt": "Detailed image description for AI image generation"
 }
 `;
 
+    // 🔥 Step 1: Generate text using Groq
     const response = await groq.chat.completions.create({
-      model: "mixtral-8x7b-32768",
+      model: "llama-3.3-70b-versatile",
       messages: [{ role: "user", content: prompt }],
       temperature: 0.7,
     });
 
     const rawText = response.choices[0].message.content;
 
-    // Safe JSON parsing
     let parsed;
 
     try {
       parsed = JSON.parse(rawText);
-    } catch (err) {
-      // If model returns extra text, attempt extraction
-      const jsonMatch = rawText.match(/\{[\s\S]*\}/);
-      parsed = jsonMatch ? JSON.parse(jsonMatch[0]) : { content: rawText };
+    } catch {
+      const match = rawText.match(/\{[\s\S]*\}/);
+      parsed = match ? JSON.parse(match[0]) : null;
     }
+
+    if (!parsed) throw new Error("Invalid JSON from Groq");
+
+    // 🔥 Step 2: Generate image from HuggingFace
+    const imageUrl = await generateImageFromHF(parsed.imagePrompt);
+
+    parsed.imageUrl = imageUrl;
 
     return parsed;
 
   } catch (error) {
+    console.error("Content Agent Error:", error.response?.data || error.message);
     throw new Error("Content generation failed: " + error.message);
+
   }
 };
 

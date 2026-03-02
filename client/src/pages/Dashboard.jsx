@@ -41,9 +41,18 @@ const fetchCampaignById = async () => {
       const res = await API.post(
         `/agents/${campaignId}/${type}`
       );
-     console.log(res.data);
-      setResult(res.data.result);
-    } catch (error) {
+     const output=res.data.result;
+     if(type==="research"){
+      navigate("/research-result", { state: { result: output } });
+    } 
+    else if(type==="strategy"){
+      navigate("/strategy-result", { state: { result: output } });
+    }
+    else if(type==="content"){
+      navigate("/content-result", { state: { result: output } });
+    }
+  }
+    catch (error) {
   console.error("🔥 AGENT CRASH:", error);
   console.error("Response data:", error.response?.data);
   res.status(500).json({ error: error.message });
@@ -97,11 +106,7 @@ const fetchCampaignById = async () => {
 
       {loading && <p>Processing...</p>}
 
-      {result && (
-        <div style={styles.resultBox}>
-          <pre>{JSON.stringify(result, null, 2)}</pre>
-        </div>
-      )}
+     
     </div>
   );
 };
