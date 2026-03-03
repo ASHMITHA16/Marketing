@@ -1,31 +1,34 @@
 import groq from "../config/groq.js";
 import axios from "axios";
 
+
 const generateImageFromHF = async (prompt) => {
   try {
     const response = await axios.post(
-      "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2",
+      "https://router.huggingface.co/hf-inference/models/stabilityai/stable-diffusion-xl-base-1.0",
       {
         inputs: prompt,
       },
       {
         headers: {
           Authorization: `Bearer ${process.env.HF_API_KEY}`,
+          "Content-Type": "application/json",
+          Accept: "image/png", // 🔥 VERY IMPORTANT
         },
         responseType: "arraybuffer",
       }
     );
 
     const base64Image = Buffer.from(response.data, "binary").toString("base64");
-
+    console.log("🔥 Image generated successfully from HuggingFace");
     return `data:image/png;base64,${base64Image}`;
 
   } catch (error) {
-    console.error("HF Image Error:", error.response?.data || error.message);
+    console.log("🔥 HF ERROR STATUS:", error.response?.status);
+    console.log("🔥 HF ERROR DATA:", error.response?.data?.toString());
     throw new Error("Image generation failed");
   }
 };
-
 const contentAgent = async (strategy) => {
   try {
     if (!strategy) {
