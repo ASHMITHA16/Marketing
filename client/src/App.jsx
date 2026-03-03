@@ -8,7 +8,7 @@ import FetchCampaign from "./pages/FetchCampaign";
 import ResearchResult from "./pages/ResearchResult";
 import StrategyResult from "./pages/StrategyResult";
 import ContentResult from "./pages/ContentResult";
-
+import "./styles/theme.css";
 
 function App() {
   return (

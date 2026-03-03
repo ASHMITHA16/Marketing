@@ -1,0 +1,41 @@
+.fetch-page {
+  padding: 40px;
+  min-height: 100vh;
+  background: radial-gradient(circle at top left, #111 0%, #000 60%);
+  color: #e5e5e5;
+}
+
+.fetch-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.campaign-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+}
+
+.campaign-card {
+  background:#151515;
+  padding: 25px;
+  border-radius: 20px;
+  cursor: pointer;
+  border: 1px solid #222;
+  transition: 0.3s;
+}
+
+.campaign-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(255, 122, 24, 0.5);
+}
+
+.campaign-card h3 {
+  margin-bottom: 10px;
+  color: #ff7a18;
+}
+
+.campaign-card p {
+  color: #aaa;
+}

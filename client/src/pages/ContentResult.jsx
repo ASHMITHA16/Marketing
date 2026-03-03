@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import "../styles/contentResult.css";
 
 const ContentResult = () => {
   const location = useLocation();
@@ -8,45 +9,43 @@ const ContentResult = () => {
   if (!output) return <p>No content generated.</p>;
 
   return (
-    <div className="min-h-screen bg-gray-200 p-10 flex justify-center">
-      
-      <div className="bg-white w-96 rounded-xl shadow-lg overflow-hidden">
-        
-        {/* 🔥 AI Generated Image */}
-        <img
-          src={output.imageUrl}
-          alt="Generated Post"
-          className="w-full h-80 object-cover"
-        />
+  <div className="content-page">
 
-        <div className="p-4">
-          <h2 className="font-semibold text-lg mb-2">
-            {output.title}
-          </h2>
+    <button
+      onClick={() => navigate(-1)}
+      className="back-button"
+    >
+      ← Back
+    </button>
 
-          <p className="text-sm whitespace-pre-line mb-3">
-            {output.content}
-          </p>
+    <div className="content-card">
 
-          <div className="flex flex-wrap gap-1">
-            {output.hashtags?.map((tag, index) => (
-              <span key={index} className="text-blue-600 text-sm">
-                {tag}
-              </span>
-            ))}
-          </div>
+      <img
+        src={output.imageUrl}
+        alt="Generated Post"
+      />
+
+      <div className="content-body">
+        <h2 className="content-title">
+          {output.title}
+        </h2>
+
+        <p className="content-text">
+          {output.content}
+        </p>
+
+        <div className="hashtags">
+          {output.hashtags?.map((tag, index) => (
+            <span key={index} className="hashtag">
+              {tag}
+            </span>
+          ))}
         </div>
       </div>
 
-      <button
-        onClick={() => navigate(-1)}
-        className="absolute top-10 left-10 bg-purple-600 text-white px-4 py-2 rounded"
-      >
-        Back
-      </button>
-
     </div>
-  );
-};
 
+  </div>
+);
+};
 export default ContentResult;

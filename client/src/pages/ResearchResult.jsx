@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
+import "../styles/researchResult.css";
 
 const ResearchResult = () => {
   const location = useLocation();
@@ -11,27 +12,27 @@ const ResearchResult = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
-      <div className="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-md">
-        
-        <h1 className="text-3xl font-bold mb-6 text-blue-600">
-          Marketing Research Report
-        </h1>
+  <div className="research-page">
+    <div className="research-container">
 
-        <div className="prose max-w-none">
-          <ReactMarkdown>{analysis}</ReactMarkdown>
-        </div>
+      <h1 className="research-title">
+        Marketing Research Report
+      </h1>
 
-        <button
-          onClick={() => navigate(-1)}
-          className="mt-8 bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700"
-        >
-          ← Back to Dashboard
-        </button>
-
+      <div className="research-content">
+        <ReactMarkdown>{analysis}</ReactMarkdown>
       </div>
+
+      <button
+        onClick={() => navigate(-1)}
+        className="research-back"
+      >
+        ← Back to Dashboard
+      </button>
+
     </div>
-  );
+  </div>
+);
 };
 
 export default ResearchResult;

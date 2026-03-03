@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import API from "../services/api";
 import { useEffect } from "react";
+import "../styles/dashboard.css";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -62,103 +63,62 @@ const fetchCampaignById = async () => {
   };
 
   return (
-    <div style={styles.page}>
-      <div style={styles.header}>
-        <h1>Dashboard</h1>
-       <button
-          style={styles.newBtn}
-          onClick={() => navigate("/campaigns")}
-          >
-          + New Campaign
-          </button>
-          
+  <div className="dashboard-page">
+
+    <div className="dashboard-header">
+      <h1>Dashboard</h1>
+
+      <div>
         <button
-          style={styles.newBtn}
+          className="btn-primary"
+          onClick={() => navigate("/campaigns")}
+        >
+          + New Campaign
+        </button>
+
+        <button
+          className="btn-primary"
           onClick={() => navigate("/fetch")}
-          
         >
           Select Campaign
         </button>
       </div>
-
-      {selectedCampaign && (
-        <div style={styles.selectedBox}>
-          <h3>Selected Campaign:</h3>
-          <p>{selectedCampaign.productDescription}</p>
-        </div>
-      )}
-
-      <div style={styles.agentGrid}>
-        <AgentCard
-          title="Research Agent"
-          onClick={() => runAgent("research")}
-        />
-        <AgentCard
-          title="Strategy Agent"
-
-          onClick={() => runAgent("strategy")}
-        />
-        <AgentCard
-          title="Content Agent"
-          onClick={() => runAgent("content")}
-        />
-      </div>
-
-      {loading && <p>Processing...</p>}
-
-     
     </div>
-  );
+
+    {selectedCampaign && (
+      <div className="selected-box">
+        <h3>Selected Campaign:</h3>
+        <p>{selectedCampaign.productDescription}</p>
+      </div>
+    )}
+
+    <div className="agent-grid">
+      <AgentCard
+        title="Research Agent"
+        onClick={() => runAgent("research")}
+      />
+      <AgentCard
+        title="Strategy Agent"
+        onClick={() => runAgent("strategy")}
+      />
+      <AgentCard
+        title="Content Agent"
+        onClick={() => runAgent("content")}
+      />
+    </div>
+
+    {loading && <p>Processing...</p>}
+  </div>
+);
 };
 
 const AgentCard = ({ title, onClick }) => (
-  <div style={styles.card} onClick={onClick}>
+  <div className="agent-card" onClick={onClick}>
     <h3>{title}</h3>
   </div>
 );
 
-const styles = {
-  page: {
-    padding: "40px",
-    minHeight: "100vh",
-    backgroundColor: "#f3f4f6",
-  },
-  header: {
-    display: "flex",
-    justifyContent: "space-between",
-    marginBottom: "20px",
-  },
-  newBtn: {
-    padding: "8px 14px",
-    backgroundColor: "#2563eb",
-    color: "#fff",
-    border: "none",
-    borderRadius: "6px",
-    cursor: "pointer",
-  },
-  selectedBox: {
-    backgroundColor: "#fff",
-    padding: "15px",
-    borderRadius: "8px",
-    marginBottom: "20px",
-  },
-  agentGrid: {
-    display: "flex",
-    gap: "20px",
-  },
-  card: {
-    backgroundColor: "#fff",
-    padding: "30px",
-    borderRadius: "10px",
-    cursor: "pointer",
-    boxShadow: "0 4px 10px rgba(0,0,0,0.05)",
-  },
-  resultBox: {
-    marginTop: "30px",
-    backgroundColor: "#fff",
-    padding: "20px",
-    borderRadius: "8px",
-  },
-};
-
 export default Dashboard;
+
+
+

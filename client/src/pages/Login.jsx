@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import API from "../services/api";
+import "../styles/login.css";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const Login = () => {
         email,
         password,
       });
-
+      console.log("Login successful:", res);
       localStorage.setItem("token", res.data.token);
       navigate("/dashboard");
     } catch (err) {
@@ -26,79 +27,42 @@ const Login = () => {
     }
   };
 
+
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h2>Login to CampaignIQ</h2>
+  <div className="login-page">
+    <div className="login-card">
+      <h2>Login to CampaignIQ</h2>
 
-        {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p className="login-error">{error}</p>}
 
-        <form onSubmit={handleLogin} style={styles.form}>
-          <input
-            type="email"
-            placeholder="Email"
-            required
-            style={styles.input}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+      <form onSubmit={handleLogin} className="login-form">
+        <input
+          type="email"
+          placeholder="Email"
+          required
+          className="login-input"
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-          <input
-            type="password"
-            placeholder="Password"
-            required
-            style={styles.input}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+        <input
+          type="password"
+          placeholder="Password"
+          required
+          className="login-input"
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-          <button type="submit" style={styles.button}>
-            Login
-          </button>
-        </form>
+        <button type="submit" className="login-button">
+          Login
+        </button>
+      </form>
 
-        <p>
-          Don't have an account?{" "}
-          <Link to="/signup">Sign up</Link>
-        </p>
-      </div>
+      <p className="login-footer">
+        Don't have an account? <Link to="/signup">Sign up</Link>
+      </p>
     </div>
-  );
-};
-
-const styles = {
-  container: {
-    height: "100vh",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    background: "#f4f6f9",
-  },
-  card: {
-    background: "#fff",
-    padding: "40px",
-    borderRadius: "10px",
-    width: "350px",
-    boxShadow: "0 5px 15px rgba(0,0,0,0.1)",
-    textAlign: "center",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "15px",
-    marginTop: "20px",
-  },
-  input: {
-    padding: "10px",
-    borderRadius: "5px",
-    border: "1px solid #ccc",
-  },
-  button: {
-    padding: "10px",
-    borderRadius: "5px",
-    border: "none",
-    backgroundColor: "#2563eb",
-    color: "white",
-    cursor: "pointer",
-  },
+  </div>
+);
 };
 
 export default Login;

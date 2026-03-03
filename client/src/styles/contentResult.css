@@ -1,0 +1,79 @@
+.content-page {
+  min-height: 100vh;
+  background: radial-gradient(circle at top left, #111 0%, #000 60%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  position: relative;
+  color: #e5e5e5;
+}
+
+/* Instagram Card */
+.content-card {
+  width: 360px;
+  background: #151515;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid #222;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+  transition: 0.3s;
+}
+
+.content-card:hover {
+  box-shadow: 0 0 25px rgba(255, 122, 24, 0.5);
+}
+
+.content-card img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+}
+
+/* Content section */
+.content-body {
+  padding: 20px;
+}
+
+.content-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #ff7a18;
+}
+
+.content-text {
+  font-size: 14px;
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+
+.hashtags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.hashtag {
+  color: #ff7a18;
+  font-size: 13px;
+}
+
+/* Back Button */
+.back-button {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  padding: 8px 16px;
+  background: #ff7a18;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.back-button:hover {
+  background: #ff5500;
+  box-shadow: 0 0 15px rgba(255, 122, 24, 0.6);
+}
