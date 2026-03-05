@@ -5,7 +5,7 @@ import "../styles/createCampaign.css";
 
 const CreateCampaign = () => {
   const navigate = useNavigate();
-
+  const [website, setWebsite] = useState("");
   const [name, setName] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [budget, setBudget] = useState("");
@@ -24,6 +24,7 @@ const CreateCampaign = () => {
         productDescription,
         budget: Number(budget),
         contentType,
+        website,
       });
        
       navigate("/dashboard");
@@ -58,6 +59,18 @@ const CreateCampaign = () => {
             className="form-textarea"
           />
         </div>
+
+        <div className="form-field">
+       <label>Website URL</label>
+       <input
+        type="text"
+        value={website}
+        onChange={(e) => setWebsite(e.target.value)}
+        placeholder="https://yourwebsite.com"
+        required
+        className="form-input"
+      />
+      </div>
 
         <div className="form-field">
           <label>Name</label>
@@ -96,6 +109,7 @@ const CreateCampaign = () => {
             <option value="email_marketing">Email Marketing</option>
           </select>
         </div>
+        
 
         <div className="button-row">
           <button

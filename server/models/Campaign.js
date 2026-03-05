@@ -14,6 +14,10 @@ const campaignSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    website: {
+      type: String,
+      required: true
+  },
 
     // Temporary dummy placeholders (AI later)
     research: {

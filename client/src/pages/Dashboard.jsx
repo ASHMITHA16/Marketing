@@ -43,6 +43,7 @@ const fetchCampaignById = async () => {
         `/agents/${campaignId}/${type}`
       );
      const output=res.data.result;
+     console.log("Agent output:", output);
      if(type==="research"){
       navigate("/research-result", { state: { result: output } });
     } 

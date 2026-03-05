@@ -9,6 +9,7 @@ import analyticsRoutes from "./routes/analyticsRoutes.js";
 import campaignRoutes from "./routes/campaignRoutes.js";
 import trackingRoutes from "./routes/trackingRoutes.js";
 import agentRoutes from "./routes/agentRoutes.js";
+
 import Campaign from "./models/Campaign.js";
 const app = express();
 
@@ -23,6 +24,9 @@ mongoose
   .catch((err) => console.log(err));
 
 // Routes
+
+
+app.use("/", trackingRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/analytics",analyticsRoutes); 
 app.use("/api/campaigns", campaignRoutes);

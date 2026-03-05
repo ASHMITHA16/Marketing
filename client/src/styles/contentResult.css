@@ -77,3 +77,48 @@
   background: #ff5500;
   box-shadow: 0 0 15px rgba(255, 122, 24, 0.6);
 }
+.content-actions{
+  margin-top:15px;
+  display:flex;
+  gap:10px;
+}
+
+.download-btn,
+.copy-btn{
+  padding:8px 14px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.download-btn{
+  background:#ff7a18;
+  color:white;
+}
+
+.copy-btn{
+  background:#333;
+  color:white;
+}
+
+.download-btn:hover{
+  background:#ff5500;
+}
+
+.copy-btn:hover{
+  background:#555;
+}
+
+.tracking-link{
+  margin-top:10px;
+  font-size:14px;
+}
+
+.tracking-link a{
+  color:#ff7a18;
+  text-decoration:none;
+}
+
+.tracking-link a:hover{
+  text-decoration:underline;
+}
