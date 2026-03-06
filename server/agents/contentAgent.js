@@ -1,7 +1,7 @@
 import groq from "../config/groq.js";
 import axios from "axios";
 
-const generateImageFromHF = async (prompt) => {
+const generateImageFromHF = async (prompt) => { 
   try {
     const response = await axios.post(
       "https://router.huggingface.co/hf-inference/models/stabilityai/stable-diffusion-xl-base-1.0",
@@ -19,7 +19,7 @@ const generateImageFromHF = async (prompt) => {
     const base64Image = Buffer.from(response.data, "binary").toString("base64");
 
     return `data:image/png;base64,${base64Image}`;
-
+    
   } catch (error) {
     console.log("HF ERROR:", error.response?.data);
     throw new Error("Image generation failed");
@@ -89,9 +89,10 @@ Return ONLY JSON:
     if (!parsed) throw new Error("Invalid JSON from Groq");
 
     const imageUrl = await generateImageFromHF(parsed.imagePrompt);
-
+    const trackingLink = `http://localhost:5000/tracking/track/${strategy.campaignId}`;
+    console.log("Generated content:", parsed);
     parsed.imageUrl = imageUrl;
-    parsed.trackingLink = `http://localhost:5000/track/${strategy.campaignId}`;
+    parsed.trackingLink = trackingLink;
 
     return parsed;
 

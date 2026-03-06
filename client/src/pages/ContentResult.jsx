@@ -14,7 +14,7 @@ const ContentResult = () => {
     link.download = "ai-post.png";
     link.click();
   };
-
+  
   const copyCaption = () => {
     navigator.clipboard.writeText(output.content);
     alert("Caption copied!");

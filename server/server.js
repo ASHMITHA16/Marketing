@@ -30,7 +30,6 @@ app.use("/", trackingRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/analytics",analyticsRoutes); 
 app.use("/api/campaigns", campaignRoutes);
-app.use("/api/tracking", trackingRoutes);
 app.use("/api/agents", agentRoutes);
 app.listen(5000, () => {
   console.log("Server running on port 5000");

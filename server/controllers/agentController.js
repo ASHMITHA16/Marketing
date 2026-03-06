@@ -13,7 +13,7 @@ const runAgent = async (req, res) => {
     if (!campaign) {
       return res.status(404).json({ message: "Campaign not found" });
     }
-
+    
     let result;
 
     switch (type) {
@@ -37,16 +37,21 @@ const runAgent = async (req, res) => {
      campaign.strategy = result;
      break;
 
-  case "content":
-  if (!campaign.strategy) {
+    case "content":
+   if (!campaign.strategy) {
     return res.status(400).json({
       message: "Please run Strategy Agent first"
     });
   }
 
- result = await contentAgent(campaign.strategy);
-  campaign.content = result;
-  break;
+  result = await contentAgent(campaign.strategy);
+
+  // 🔥 add tracking link
+   result.trackingLink = `http://localhost:5000/track/${campaign._id}`;
+
+   campaign.content = result;
+
+   break;
 
       case "analytics":
         result = analyticsAgent({
@@ -60,7 +65,7 @@ const runAgent = async (req, res) => {
         break;
 
       case "optimization":
-  if (!campaign.analytics) {
+   if (!campaign.analytics) {
     return res.status(400).json({
       message: "Please run Analytics Agent first"
     });
