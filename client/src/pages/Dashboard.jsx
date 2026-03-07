@@ -53,6 +53,12 @@ const fetchCampaignById = async () => {
     else if(type==="content"){
       navigate("/content-result", { state: { result: output } });
     }
+    else if(type==="analytics"){
+     navigate("/analytics-result", { state: { result: output } });
+   }
+   else if(type==="optimization"){
+     navigate("/optimization-result", { state: { result: output } });
+   }
   }
     catch (error) {
   console.error("🔥 AGENT CRASH:", error);
@@ -106,6 +112,15 @@ const fetchCampaignById = async () => {
         title="Content Agent"
         onClick={() => runAgent("content")}
       />
+      <AgentCard
+      title="Analytics Agent"
+      onClick={() => runAgent("analytics")}
+     />
+
+    <AgentCard
+    title="Optimization Agent"
+    onClick={() => runAgent("optimization")}
+   />
     </div>
 
     {loading && <p>Processing...</p>}

@@ -4,7 +4,7 @@ import strategyAgent from "../agents/strategyAgent.js";
 import contentAgent from "../agents/contentAgent.js";
 import analyticsAgent from "../agents/analyticsAgent.js";
 import optimizationAgent from "../agents/optimizationAgent.js";
-
+ import Tracking from "../models/Tracking.js";
 const runAgent = async (req, res) => {
   try {
     const { id, type } = req.params;
@@ -52,26 +52,47 @@ const runAgent = async (req, res) => {
    campaign.content = result;
 
    break;
+   
+  
 
-      case "analytics":
-        result = analyticsAgent({
-          impressions: campaign.impressions,
-          clicks: campaign.clicks,
-          conversions: campaign.conversions,
-          spend: campaign.budget,
-          revenue: campaign.revenue,
-        });
-        campaign.analytics = result;
-        break;
+  case "analytics":
 
-      case "optimization":
-   if (!campaign.analytics) {
+   const tracking = await Tracking.findOne({
+    campaignId: campaign._id
+  });
+
+  const clicks = tracking ? tracking.clicks : 0;
+  const impressions = tracking ? tracking.impressions : 0;
+  const conversions = tracking ? tracking.conversions : 0;
+
+  const ctr = impressions > 0 ? ((clicks / impressions) * 100).toFixed(2) : 0;
+
+  const performanceScore =
+    clicks * 2 + conversions * 5;
+
+  result = await analyticsAgent({
+    clicks,
+    impressions,
+    conversions,
+    ctr,
+    performanceScore,
+    budget: campaign.budget
+  });
+
+  campaign.analytics = result;
+
+  break;
+
+     case "optimization":
+
+  if (!campaign.analytics) {
     return res.status(400).json({
       message: "Please run Analytics Agent first"
     });
   }
 
-  result = optimizationAgent(campaign.analytics);
+  result = await optimizationAgent(campaign.analytics);
+
   campaign.optimization = result;
   break;
     }

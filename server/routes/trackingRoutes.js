@@ -4,30 +4,77 @@ import Campaign from "../models/Campaign.js";
 
 const router = express.Router();
 
-router.get("/track/:campaignId", async (req, res) => {
+router.get("/track/:campaignId", async (req,res)=>{
 
-  try {
+  try{
 
-    const { campaignId } = req.params;
+    const {campaignId} = req.params;
 
     const campaign = await Campaign.findById(campaignId);
 
-    if (!campaign) {
+    if(!campaign){
       return res.status(404).send("Campaign not found");
     }
-     console.log("Tracking click for campaign:", campaignId);
-    await Tracking.findOneAndUpdate(
-      { campaignId },
-      { $inc: { clicks: 1 } },
-      { upsert: true }
+
+    const tracking = await Tracking.findOneAndUpdate(
+
+      {campaignId},
+
+      {
+        $inc:{
+          impressions:1,
+          clicks:1
+        }
+      },
+
+      {upsert:true,new:true}
+
     );
-    const some= await Tracking.findOne({ campaignId,clicks: { $gt: 0 } })
-    console.log("Tracking click for campaign:", some);
+
+    console.log(`Campaign ${campaign.name}`);
+    console.log(`Impressions: ${tracking.impressions}`);
+    console.log(`Clicks: ${tracking.clicks}`);
+
     res.redirect(campaign.website);
 
-  } catch (error) {
+  }
+
+  catch(error){
+
     console.log(error);
     res.status(500).send("Tracking error");
+
+  }
+
+});
+
+router.get("/convert/:campaignId", async (req,res)=>{
+
+  try{
+
+    const {campaignId} = req.params;
+
+    const tracking = await Tracking.findOneAndUpdate(
+
+      {campaignId},
+
+      {$inc:{conversions:1}},
+
+      {new:true}
+
+    );
+
+    console.log(`Conversions: ${tracking.conversions}`);
+
+    res.send("Conversion recorded");
+
+  }
+
+  catch(error){
+
+    console.log(error);
+    res.status(500).send("Conversion error");
+
   }
 
 });

@@ -1,23 +1,31 @@
-const optimizationAgent = (metrics) => {
-  const suggestions = [];
+import groq from "../config/groq.js";
 
-  if (metrics.ctr < 2) {
-    suggestions.push("Improve ad creatives to increase CTR.");
-  }
+const optimizationAgent = async (analyticsReport) => {
 
-  if (metrics.conversionRate < 5) {
-    suggestions.push("Optimize landing page for better conversions.");
-  }
+  const prompt = `
+You are a digital marketing optimization expert.
 
-  if (metrics.cac > 50) {
-    suggestions.push("Reduce budget on low-performing platforms.");
-  }
+Based on the following analytics report:
 
-  if (metrics.roi < 0) {
-    suggestions.push("Shift budget to higher ROI channels.");
-  }
+${analyticsReport}
 
-  return suggestions;
+Provide optimization recommendations:
+
+1. Improve content strategy
+2. Improve audience targeting
+3. Budget allocation suggestions
+4. Platform recommendations
+
+Return actionable recommendations.
+`;
+
+  const response = await groq.chat.completions.create({
+    model: "llama-3.3-70b-versatile",
+    messages: [{ role: "user", content: prompt }],
+    temperature: 0.6,
+  });
+
+  return response.choices[0].message.content;
 };
 
 export default optimizationAgent;

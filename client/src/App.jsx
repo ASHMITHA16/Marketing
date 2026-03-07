@@ -8,6 +8,8 @@ import FetchCampaign from "./pages/FetchCampaign";
 import ResearchResult from "./pages/ResearchResult";
 import StrategyResult from "./pages/StrategyResult";
 import ContentResult from "./pages/ContentResult";
+import AnalyticsResult from "./pages/AnalyticsResult";
+import OptimizationResult from "./pages/OptimizationResult";
 import "./styles/theme.css";
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
         <Route path="/research-result" element={<ResearchResult />} />
        <Route path="/strategy-result" element={<StrategyResult />} />
        <Route path="/content-result" element={<ContentResult />} />
+       <Route path="/analytics-result" element={<AnalyticsResult />} />
+       <Route path="/optimization-result" element={<OptimizationResult />} />
       </Routes>
     </Router>
   );

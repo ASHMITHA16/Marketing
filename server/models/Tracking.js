@@ -1,14 +1,25 @@
 import mongoose from "mongoose";
 
 const trackingSchema = new mongoose.Schema({
-  campaignId: {
+
+  campaignId:{
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Campaign"
+    ref:"Campaign"
   },
 
-  clicks: {
-    type: Number,
-    default: 0
+  impressions:{
+    type:Number,
+    default:0
+  },
+
+  clicks:{
+    type:Number,
+    default:0
+  },
+
+  conversions:{
+    type:Number,
+    default:0
   }
 
 });

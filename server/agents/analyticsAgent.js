@@ -1,30 +1,32 @@
- const analyticsAgent= (data) => {
-  const {
-    impressions = 0,
-    clicks = 0,
-    conversions = 0,
-    spend = 0,
-    revenue = 0,
-  } = data;
+const analyticsAgent = async (data) => {
 
-  const ctr =
-    impressions === 0 ? 0 : (clicks / impressions) * 100;
+  const prompt = `
+You are a marketing analytics expert.
 
-  const conversionRate =
-    clicks === 0 ? 0 : (conversions / clicks) * 100;
+Campaign Data:
 
-  const cac =
-    conversions === 0 ? 0 : spend / conversions;
+Impressions: ${data.impressions}
+Clicks: ${data.clicks}
+Conversions: ${data.conversions}
+CTR: ${data.ctr}%
+Performance Score: ${data.performanceScore}
+Budget: ${data.budget}
 
-  const roi =
-    spend === 0 ? 0 : ((revenue - spend) / spend) * 100;
+Provide:
 
-  return {
-    ctr: ctr.toFixed(2),
-    conversionRate: conversionRate.toFixed(2),
-    cac: cac.toFixed(2),
-    roi: roi.toFixed(2),
-  };
+1. Performance Summary
+2. Key Insights
+3. Problems in Campaign
+4. Recommendations to improve
+
+Write in clear markdown format.
+`;
+
+  const response = await groq.chat.completions.create({
+    model: "llama-3.3-70b-versatile",
+    messages: [{ role: "user", content: prompt }],
+    temperature: 0.5
+  });
+
+  return response.choices[0].message.content;
 };
-
-export default analyticsAgent;
