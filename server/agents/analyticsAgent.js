@@ -1,3 +1,5 @@
+import groq from "../config/groq.js";
+import axios from "axios";
 const analyticsAgent = async (data) => {
 
   const prompt = `
@@ -30,3 +32,5 @@ Write in clear markdown format.
 
   return response.choices[0].message.content;
 };
+
+export default analyticsAgent;

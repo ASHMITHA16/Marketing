@@ -80,12 +80,11 @@ const runAgent = async (req, res) => {
   });
 
   campaign.analytics = result;
-
   break;
 
      case "optimization":
 
-  if (!campaign.analytics) {
+   if (!campaign.analytics) {
     return res.status(400).json({
       message: "Please run Analytics Agent first"
     });

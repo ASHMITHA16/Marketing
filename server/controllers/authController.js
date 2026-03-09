@@ -33,6 +33,7 @@ export const signup = async (req, res) => {
     
     res.status(201).json({
       message: "Signup successful",
+     
     });
 
   } catch (error) {

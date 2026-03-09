@@ -89,11 +89,9 @@ Return ONLY JSON:
     if (!parsed) throw new Error("Invalid JSON from Groq");
 
     const imageUrl = await generateImageFromHF(parsed.imagePrompt);
-   // const trackingLink = `http://localhost:5000/tracking/track/${strategy.campaignId}`;
-   // console.log("Generated content:", parsed);
+  
     parsed.imageUrl = imageUrl;
-   // parsed.trackingLink = trackingLink;
-
+   
     return parsed;
 
   } catch (error) {

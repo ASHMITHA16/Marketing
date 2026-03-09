@@ -32,6 +32,14 @@ const campaignSchema = new mongoose.Schema(
       type: Object,
       default: {},
     },
+    analytics:{
+      type:Object,
+      default:{},
+    },
+    optimization:{
+      type:Object,
+      default:{},
+    },
 
     impressions: { type: Number, default: 0 },
     clicks: { type: Number, default: 0 },

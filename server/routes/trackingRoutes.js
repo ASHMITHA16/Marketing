@@ -35,7 +35,8 @@ router.get("/track/:campaignId", async (req,res)=>{
     console.log(`Impressions: ${tracking.impressions}`);
     console.log(`Clicks: ${tracking.clicks}`);
 
-    res.redirect(campaign.website);
+
+    res.redirect(`${campaign.website}?campaignId=${campaignId}`);
 
   }
 

@@ -27,8 +27,13 @@ const Signup = () => {
     setError("");
 
     try {
-      await API.post("/auth/signup", formData);
-      navigate("/");
+      await API.post("/auth/signup",{
+         name: formData.name,
+        companyName: formData.companyName,
+        email: formData.email,
+        password: formData.password,
+      });
+      navigate("/login");
     } catch (err) {
       setError("Signup failed");
     }
