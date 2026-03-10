@@ -1,54 +1,80 @@
-.analytics-page{
-  min-height:100vh;
-  background:#0f172a;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:40px;
+/* Page Layout */
+.analytics-page {
+  min-height: 100vh;
+  background: #f1f5f9;
+  padding: 40px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.analytics-container{
-  width:900px;
-  background:#111827;
-  border-radius:12px;
-  padding:35px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.4);
-  color:white;
+/* Page Title */
+.analytics-page h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #1e293b;
 }
 
-.analytics-title{
-  font-size:28px;
-  margin-bottom:20px;
-  color:#22c55e;
+/* Back Button */
+.back-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 20px;
 }
 
-.analytics-content{
-  line-height:1.7;
-  font-size:16px;
-  margin-bottom:30px;
+.back-btn:hover {
+  background: #1d4ed8;
 }
 
-.analytics-content h1,
-.analytics-content h2,
-.analytics-content h3{
-  margin-top:15px;
-  color:#38bdf8;
+/* Metrics Grid */
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
 
-.analytics-content ul{
-  margin-left:20px;
+/* Individual Metric Card */
+.metric {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  transition: transform 0.2s;
 }
 
-.analytics-back{
-  padding:10px 18px;
-  border:none;
-  border-radius:6px;
-  background:#22c55e;
-  color:white;
-  cursor:pointer;
-  font-size:14px;
+.metric:hover {
+  transform: translateY(-5px);
 }
 
-.analytics-back:hover{
-  background:#16a34a;
+/* Metric Titles */
+.metric h3 {
+  font-size: 16px;
+  color: #64748b;
+  margin-bottom: 10px;
+}
+
+/* Metric Values */
+.metric p {
+  font-size: 28px;
+  font-weight: bold;
+  color: #0f172a;
+}
+
+/* Chart Container */
+.chart-container {
+  margin-top: 40px;
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+}
+
+/* Responsive Layout */
+@media (max-width: 900px) {
+  .analytics-grid {
+    grid-template-columns: 1fr;
+  }
 }

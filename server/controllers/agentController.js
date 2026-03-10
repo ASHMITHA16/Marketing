@@ -55,28 +55,22 @@ const runAgent = async (req, res) => {
    
   
 
-  case "analytics":
 
-   const tracking = await Tracking.findOne({
-    campaignId: campaign._id
-  });
 
-  const clicks = tracking ? tracking.clicks : 0;
-  const impressions = tracking ? tracking.impressions : 0;
-  const conversions = tracking ? tracking.conversions : 0;
+case "analytics":
 
-  const ctr = impressions > 0 ? ((clicks / impressions) * 100).toFixed(2) : 0;
+  const tracking = await Tracking.findOne({ campaignId: id });
 
-  const performanceScore =
-    clicks * 2 + conversions * 5;
+  const impressions = tracking?.impressions || 0;
+  const clicks = tracking?.clicks || 0;
+  const conversions = tracking?.conversions || 0;
 
-  result = await analyticsAgent({
-    clicks,
+  result = analyticsAgent({
     impressions,
+    clicks,
     conversions,
-    ctr,
-    performanceScore,
-    budget: campaign.budget
+    spend: campaign.budget,
+    revenue: 0
   });
 
   campaign.analytics = result;

@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import ReactMarkdown from "react-markdown";
+import AnalyticsChart from "../components/AnalyticsChart";
 import "../styles/analyticsResult.css";
 
 const AnalyticsResult = () => {
@@ -7,32 +7,59 @@ const AnalyticsResult = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const output = location.state?.result;
+  const data = location.state?.result;
 
-  if (!output) {
-    return <p>No analytics data found.</p>;
-  }
+  if (!data) return <p>No analytics available</p>;
 
   return (
     <div className="analytics-page">
 
-      <div className="analytics-container">
+      <button onClick={() => navigate(-1)} className="back-btn">
+        ← Back
+      </button>
 
-        <h1 className="analytics-title">
-          Campaign Analytics Report
-        </h1>
+      <h1>Campaign Analytics</h1>
 
-        <div className="analytics-content">
-          <ReactMarkdown>{output}</ReactMarkdown>
+      <div className="analytics-grid">
+
+        <div className="metric">
+          <h3>Impressions</h3>
+          <p>{data.impressions}</p>
         </div>
 
-        <button
-          onClick={() => navigate(-1)}
-          className="analytics-back"
-        >
-          ← Back to Dashboard
-        </button>
+        <div className="metric">
+          <h3>Clicks</h3>
+          <p>{data.clicks}</p>
+        </div>
 
+        <div className="metric">
+          <h3>Conversions</h3>
+          <p>{data.conversions}</p>
+        </div>
+
+        <div className="metric">
+          <h3>CTR</h3>
+          <p>{data.ctr}%</p>
+        </div>
+
+        <div className="metric">
+          <h3>Conversion Rate</h3>
+          <p>{data.conversionRate}%</p>
+        </div>
+
+        <div className="metric">
+          <h3>Performance Score</h3>
+          <p>{data.performanceScore}/100</p>
+        </div>
+
+      </div>
+
+      <div className="chart-container">
+        <AnalyticsChart
+          impressions={data.impressions}
+          clicks={data.clicks}
+          conversions={data.conversions}
+        />
       </div>
 
     </div>
