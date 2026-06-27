@@ -4,7 +4,7 @@ import axios from "axios";
 const generateImageFromHF = async (prompt) => { 
   try {
     const response = await axios.post(
-      "https://router.huggingface.co/hf-inference/models/stabilityai/stable-diffusion-xl-base-1.0",
+       "https://router.huggingface.co/hf-inference/models/black-forest-labs/FLUX.1-schnell",
       { inputs: prompt },
       {
         headers: {
@@ -21,9 +21,17 @@ const generateImageFromHF = async (prompt) => {
     return `data:image/png;base64,${base64Image}`;
     
   } catch (error) {
-    console.log("HF ERROR:", error.response?.data);
+    if (error.response) {
+        console.log(
+            "HF ERROR:",
+            Buffer.from(error.response.data).toString()
+        );
+    } else {
+        console.log(error.message);
+    }
+
     throw new Error("Image generation failed");
-  }
+}
 };
 
 const contentAgent = async (strategy, contentType = "instagram_post") => {

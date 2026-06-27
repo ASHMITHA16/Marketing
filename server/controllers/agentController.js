@@ -45,10 +45,10 @@ const runAgent = async (req, res) => {
   }
 
   result = await contentAgent(campaign.strategy);
-
+  result.impressionLink = `http://localhost:5000/impression/${campaign._id}`;
   // 🔥 add tracking link
    result.trackingLink = `http://localhost:5000/track/${campaign._id}`;
-
+   
    campaign.content = result;
 
    break;

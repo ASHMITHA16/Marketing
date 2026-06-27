@@ -1,5 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/contentResult.css";
+import { useEffect } from "react";
+import axios from "axios";
 
 const ContentResult = () => {
   const location = useLocation();
@@ -19,6 +21,10 @@ const ContentResult = () => {
     navigator.clipboard.writeText(output.content);
     alert("Caption copied!");
   };
+
+   useEffect(() => {
+    axios.get(output.impressionLink);
+  }, []);
 
   return (
     <div className="content-page">
@@ -50,9 +56,9 @@ const ContentResult = () => {
             <button onClick={copyCaption} className="copy-btn">
               Copy Caption
             </button>
-          </div>
+        <div>
           <p className="tracking-link">
-             Try it here 👇
+             Visit the website 👇
           <br />
          <a
             href={output.trackingLink}
@@ -62,13 +68,12 @@ const ContentResult = () => {
          {output.trackingLink}
       </a>
     </p>
-
+    </div>
+          </div>
         </div>
-
       </div>
-
     </div>
   );
-};
+}
 
 export default ContentResult;
